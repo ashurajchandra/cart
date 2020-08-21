@@ -2,97 +2,32 @@ import React from 'react';
 
 import CartItem from './CartItem'
 
-
-class Cart extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            products: [
-                {
-                    title: 'Phone',
-                    price: 9999,
-                    qty: 1,
-                    img: '',
-                    id: 1
-                },
-                this.state = {
-                    title: 'Watch',
-                    price: 999,
-                    qty: 10,
-                    img: '',
-                    id: 2
-                },
-                {
-                    title: 'Laptop',
-                    price: 99999,
-                    qty: 4,
-                    img: '',
-                    id: 3
-                }
-            ]
-        }
-    }
-    handleIncreaseQuantity = (product) => {
-
-        console.log('Hey please increase the qty of', product)
-        const { products } = this.state;
-        const index = products.indexOf(product);
-
-        products[index].qty += 1
-
-        this.setState({
-            products
-        })
-
-    }
-
-    handleDecreaseQuantity = (product) => {
-        const { products } = this.state;
-        const index = products.indexOf(product);
-
-        if (products[index].qty === 0) {
-            return
-        }
-        products[index].qty -= 1
+const Cart = (props) => {
 
 
-        this.setState({
-            products
-        })
-    }
 
-    handleDeleteProduct = (id) => {
-        const { products } = this.state;
-        const items = products.filter((item) => item.id !== id);
+    const { products } = props;
 
-        this.setState({
-            products: items
-        })
-    }
+    return (
+        <div className="cart">
 
-    render() {
-        const { products } = this.state
+            {products.map((product) => {
+                return <CartItem
+                    product={product}
+                    key={product.id}
+                    onIncreaseQuantity={props.onIncreaseQuantity}
+                    onDecreaseQuantity={props.onDecreaseQuantity}
+                    onDeleteProduct={props.onDeleteProduct}
+                />
 
-        return (
-            <div className="cart">
-
-                {products.map((product) => {
-                    return <CartItem
-                        product={product}
-                        key={product.id}
-                        onIncreaseQuantity={this.handleIncreaseQuantity}
-                        onDecreaseQuantity={this.handleDecreaseQuantity}
-                        onDeleteProduct={this.handleDeleteProduct}
-                    />
-
-                })
-                }
+            })
+            }
 
 
-            </div>
-        );
-    }
+        </div>
+    );
 }
+
 
 
 
